@@ -1,4 +1,4 @@
-name: Estoque V2 CI
+name: Estoque V2 - CI / Docker Validation
 
 on:
   push:
@@ -7,14 +7,27 @@ on:
     branches: [ "main" ]
 
 jobs:
-  validate-stack:
+  validate:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Validar Docker Compose (Local)
-        run: docker compose config
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
 
-      - name: Validar Docker Compose (VPS)
-        run: docker compose -f docker-compose.vps.yml config
+      - name: Validar docker-compose.yml (Local)
+        run: docker compose config --quiet
+
+      - name: Validar docker-compose.vps.yml (Produção)
+        run: docker compose -f docker-compose.vps.yml config --quiet
+
+      - name: Criar diretórios necessários
+        run: mkdir -p backups deploy
+
+      - name: Testar build das imagens (VPS)
+        run: docker compose -f docker-compose.vps.yml build --no-cache --progress=plain --quiet
+
+      - name: Teste de inicialização (dry-run)
+        run: docker compose -f docker-compose.vps.yml up --no-start --quiet
