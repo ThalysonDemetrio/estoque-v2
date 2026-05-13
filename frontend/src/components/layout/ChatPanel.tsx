@@ -12,7 +12,7 @@ import { SlidebarPanel, SlidebarHeader, SlidebarFooter } from "@/components/layo
 import { ChatConversation, ChatMessage, Solicitacao, Checklist, Equipamento, ChecklistItem } from "@/types";
 
 export function ChatPanel() {
-  const { isPanelOpen, closeChat, activeContext, openChat, refreshNotifications, processForm, setProcessForm, triggerRefresh } = useChat();
+  const { isPanelOpen, closeChat, activeContext, openChat, showChatInbox, refreshNotifications, processForm, setProcessForm, triggerRefresh } = useChat();
   const { hasPermission, user } = useAuth();
   const [conversas, setConversas] = useState<ChatConversation[]>([]);
   const [mensagens, setMensagens] = useState<ChatMessage[]>([]);
@@ -377,7 +377,7 @@ export function ChatPanel() {
         title={activeContext?.titulo || "Chat"}
         subtitle={activeContext ? `${activeContext.tipo} • ${activeContext.id}` : "Mensagens"}
         onClose={closeChat}
-        actions={activeContext && <button onClick={() => openChat(null as any)} className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i className="fa-solid fa-arrow-left"></i></button>}
+        actions={activeContext && <button type="button" onClick={() => showChatInbox()} className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 flex items-center justify-center"><i className="fa-solid fa-arrow-left"></i></button>}
       />
 
       <div className="flex-1 overflow-y-auto no-scrollbar p-0">

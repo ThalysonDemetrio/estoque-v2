@@ -10,6 +10,8 @@ interface ChatContextType {
   setIsPanelOpen: (open: boolean) => void;
   activeContext: { tipo: "movimentacao" | "solicitacao" | "colaborador"; id: string; titulo: string } | null;
   openChat: (tipo: "movimentacao" | "solicitacao" | "colaborador", id: string, titulo: string) => void;
+  /** Volta à lista de conversas mantendo o painel aberto */
+  showChatInbox: () => void;
   closeChat: () => void;
   totalUnread: number;
   unreadByContext: ChatConversation[];
@@ -64,6 +66,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     setIsPanelOpen(true);
   }, []);
 
+  const showChatInbox = useCallback(() => {
+    setActiveContext(null);
+    setIsPanelOpen(true);
+  }, []);
+
   const closeChat = useCallback(() => {
     setIsPanelOpen(false);
     // We don't clear activeContext immediately to allow exit animation
@@ -95,6 +102,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     setIsPanelOpen,
     activeContext,
     openChat,
+    showChatInbox,
     closeChat,
     totalUnread,
     unreadByContext,
@@ -106,6 +114,9 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   }), [
     isPanelOpen,
     activeContext,
+    openChat,
+    showChatInbox,
+    closeChat,
     totalUnread,
     unreadByContext,
     refreshNotifications,
