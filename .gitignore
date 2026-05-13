@@ -1,9 +1,15 @@
-deploy/.env.vps
-
-# env files
+# --- Segredos / ambiente (nunca versionar) ---
 .env
+.env.local
+.env.vps
+deploy/.env.vps
+backend/.env
+frontend/.env.local
+
+# Variantes .env.* exceto modelos públicos (*example*)
 .env.*
-!*.example
+!.env.example
+!**/*.example
 
 # dependencies
 node_modules/

@@ -20,11 +20,15 @@ jobs:
       - name: Validar docker-compose.yml (Local)
         run: docker compose config --quiet
 
+      # docker-compose.vps.yml referencia deploy/.env.vps (não versionado).
+      # Na CI copiamos apenas o modelo — sem segredos reais no repositório.
+      - name: Preparar artefatos para Compose VPS (CI)
+        run: |
+          mkdir -p backups deploy
+          cp deploy/.env.vps.example deploy/.env.vps
+
       - name: Validar docker-compose.vps.yml (Produção)
         run: docker compose -f docker-compose.vps.yml config --quiet
-
-      - name: Criar diretórios necessários
-        run: mkdir -p backups deploy
 
       - name: Testar build das imagens (VPS)
         run: docker compose -f docker-compose.vps.yml build --no-cache --progress=plain --quiet
