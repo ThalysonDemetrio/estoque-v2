@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+build
+dist
+.git
+.gitignore
+.dockerignore
+README.md
+npm-debug.log
+docker-compose.yml
+Dockerfile
+tests
+playwright.config.ts
+ts_errors.txt

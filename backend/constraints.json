@@ -1,0 +1,38 @@
+[
+  {
+    "constraint_name": "chat_mensagens_contexto_tipo_check",
+    "constraint_definition": "CHECK ((contexto_tipo = ANY (ARRAY['movimentacao'::text, 'solicitacao'::text])))"
+  },
+  {
+    "constraint_name": "chk_sol_status",
+    "constraint_definition": "CHECK ((status = ANY (ARRAY['pendente'::text, 'em_atendimento'::text, 'concluido'::text, 'rejeitado'::text])))"
+  },
+  {
+    "constraint_name": "chk_sol_urgencia",
+    "constraint_definition": "CHECK ((urgencia = ANY (ARRAY['baixa'::text, 'media'::text, 'alta'::text])))"
+  },
+  {
+    "constraint_name": "chk_mov_tipo",
+    "constraint_definition": "CHECK ((tipo_movimentacao = ANY (ARRAY['alocacao'::text, 'devolucao'::text, 'transferencia'::text, 'manutencao'::text, 'substituicao'::text])))"
+  },
+  {
+    "constraint_name": "chk_proc_tipo_acao",
+    "constraint_definition": "CHECK ((tipo_acao <> ''::text))"
+  },
+  {
+    "constraint_name": "chk_checklist_status",
+    "constraint_definition": "CHECK ((status = ANY (ARRAY['pendente'::text, 'em_andamento'::text, 'em_atendimento'::text, 'concluido'::text])))"
+  },
+  {
+    "constraint_name": "chk_equipamentos_propriedade",
+    "constraint_definition": "CHECK ((propriedade = ANY (ARRAY['empresa'::text, 'usuario'::text])))"
+  },
+  {
+    "constraint_name": "chk_equipment_network_vlan",
+    "constraint_definition": "CHECK (((vlan_id IS NULL) OR ((vlan_id >= 1) AND (vlan_id <= 4094))))"
+  },
+  {
+    "constraint_name": "chk_network_connection_type",
+    "constraint_definition": "CHECK (((connection_type)::text = ANY (ARRAY[('wired'::character varying)::text, ('wireless'::character varying)::text, ('problem'::character varying)::text])))"
+  }
+]

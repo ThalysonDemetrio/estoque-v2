@@ -1,0 +1,45 @@
+{
+  "common": {
+    "dashboard": "Dashboard",
+    "inventory": "Inventory",
+    "collaborators": "Team & Talents",
+    "movements": "Movements",
+    "requests": "Requests",
+    "auditoria": "Audit",
+    "rastreabilidade": "Traceability",
+    "rede": "Network",
+    "settings": "Settings",
+    "search": "Search...",
+    "loading": "Loading...",
+    "theme_light": "Light",
+    "theme_dark": "Dark"
+  },
+  "navigation": {
+    "home": "Home",
+    "main": "Main",
+    "dashboard": "Dashboard",
+    "inventory": "Inventory",
+    "collaborators": "Team",
+    "movements": "Movements",
+    "requests": "Requests",
+    "advanced": "Advanced",
+    "network": "Network",
+    "audit": "Audit",
+    "traceability": "Traceability",
+    "investments": "Investments",
+    "diagnostics": "Diagnostics",
+    "calendar": "Calendar",
+    "system": "System",
+    "settings": "Settings"
+  },
+  "chat": {
+    "title": "Live Chat",
+    "subtitle": "Support"
+  },
+  "dashboard": {
+    "welcome": "Welcome to SpaceStock Hub",
+    "total_value": "Total Inventory Value",
+    "total_items": "Total Items",
+    "recent_activity": "Recent Activity"
+  }
+}

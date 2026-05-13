@@ -1,0 +1,34 @@
+{
+  "name": "estoque-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Orquestracao local do sistema de estoque (frontend + backend + banco)",
+  "scripts": {
+    "postinstall": "npm install --prefix backend",
+    "dev": "concurrently -k -n backend,frontend -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "docker build -t estoque-frontend ./frontend",
+    "build:backend": "docker build -t estoque-backend ./backend",
+    "build:all": "concurrently \"npm:build:frontend\" \"npm:build:backend\"",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "npm --prefix backend run migrate",
+    "db:seed": "npm --prefix backend run seed:admin",
+    "db:init": "npm run db:migrate && npm run db:seed",
+    "db:backup": "node scripts/db-backup.js --env dev",
+    "db:backup:vps": "node scripts/db-backup.js --env vps",
+    "db:backup:verify": "node scripts/verify-backup.js",
+    "db:restore": "node scripts/db-restore.js --env dev",
+    "db:restore:vps": "node scripts/db-restore.js --env vps",
+    "deploy": "docker compose -f docker-compose.vps.yml up -d --build",
+    "deploy:stop": "docker compose -f docker-compose.vps.yml down",
+    "deploy:logs": "docker compose -f docker-compose.vps.yml logs -f",
+    "check": "npm --prefix backend run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "serve": "^14.2.4"
+  }
+}

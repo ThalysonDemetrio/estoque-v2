@@ -1,0 +1,35 @@
+deploy/.env.vps
+
+# env files
+.env
+.env.*
+!*.example
+
+# dependencies
+node_modules/
+backend/node_modules/
+.next/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# logs/runtime
+*.log
+logs/
+coverage/
+dist/
+build/
+.cache/
+ts_errors.txt
+tmp_tabs.txt
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# backups — arquivos .sql podem conter dados sensíveis
+backups/*.sql
+backend/db/*.backup.sql

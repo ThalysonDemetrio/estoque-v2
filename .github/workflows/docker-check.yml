@@ -1,0 +1,20 @@
+name: Estoque V2 CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-stack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Validar Docker Compose (Local)
+        run: docker compose config
+
+      - name: Validar Docker Compose (VPS)
+        run: docker compose -f docker-compose.vps.yml config

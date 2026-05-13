@@ -1,0 +1,109 @@
+services:
+  db:
+    image: postgres:16-alpine
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    container_name: estoque-db
+    restart: unless-stopped
+    env_file:
+      - ./deploy/.env.vps
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-estoque_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-trocar_senha_forte}
+      POSTGRES_DB: ${POSTGRES_DB:-estoque}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-estoque_user} -d ${POSTGRES_DB:-estoque}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - estoque_net
+
+  backend:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: estoque-backend
+    restart: unless-stopped
+    env_file:
+      - ./deploy/.env.vps
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-estoque_user}:${POSTGRES_PASSWORD:-trocar_senha_forte}@db:5432/${POSTGRES_DB:-estoque}
+      JWT_SECRET: ${JWT_SECRET:-trocar_chave_jwt_muito_forte}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@seu-dominio.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-trocar_senha_admin}
+      ADMIN_NOME: ${ADMIN_NOME:-Administrador}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - estoque_net
+
+  frontend:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: estoque-frontend
+    restart: unless-stopped
+    environment:
+      - BACKEND_INTERNAL_URL=http://backend:3000/api/:path*
+    healthcheck:
+      # Modificado para checar porta 3000
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - estoque_net
+
+  nginx:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    image: nginx:alpine
+    container_name: estoque-nginx
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - estoque_net
+
+volumes:
+  postgres_data:
+
+networks:
+  estoque_net:
+    driver: bridge

@@ -1,0 +1,795 @@
+@import "tailwindcss";
+
+/* Ensure dark: utilities follow app theme state, not OS media preference. */
+@custom-variant dark (&:where(.dark, .dark *, [data-theme='dark'], [data-theme='dark'] *));
+
+@theme inline {
+  /* Colors */
+  --color-brand: var(--brand-primary);
+  --color-secondary: var(--brand-secondary);
+  --color-bg: var(--app-bg);
+  --color-surface: var(--surface-primary);
+  --color-surface-soft: var(--surface-secondary);
+  --color-surface-tint: var(--surface-tint);
+
+  --color-main: var(--text-main);
+  --color-strong: var(--text-strong);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-inverse: var(--text-inverse);
+
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-error: var(--status-error);
+  --color-info: var(--status-info);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-main: var(--border-main);
+
+  /* Spacing */
+  --spacing-1: var(--spacing-1);
+  --spacing-2: var(--spacing-2);
+  --spacing-3: var(--spacing-3);
+  --spacing-4: var(--spacing-4);
+  --spacing-5: var(--spacing-5);
+  --spacing-6: var(--spacing-6);
+  --spacing-8: var(--spacing-8);
+  --spacing-10: var(--spacing-10);
+  --spacing-12: var(--spacing-12);
+
+  /* Shadows */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  /* Radius */
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+
+  --font-sans: var(--font-jakarta);
+}
+
+:root {
+  /* ──────────────────────────────────────────────────────────────────────────
+     PRIMITIVE TOKENS (Base Values)
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Neutral Palette */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  /* Brand Palette */
+  --indigo-50: #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-200: #c7d2fe;
+  --indigo-300: #a5b4fc;
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --indigo-800: #3730a3;
+  --indigo-900: #312e81;
+
+  /* Semantic Primitives */
+  --green-500: #10b981;
+  --red-500: #ef4444;
+  --amber-500: #f59e0b;
+  --orange-500: #f97316;
+  --blue-500: #3b82f6;
+
+  /* Spacing & Sizing */
+  --spacing-1: 0.25rem;
+  /* 4px */
+  --spacing-2: 0.5rem;
+  /* 8px */
+  --spacing-3: 0.75rem;
+  /* 12px */
+  --spacing-4: 1rem;
+  /* 16px */
+  --spacing-5: 1.25rem;
+  /* 20px */
+  --spacing-6: 1.5rem;
+  /* 24px */
+  --spacing-8: 2rem;
+  /* 32px */
+  --spacing-10: 2.5rem;
+  /* 40px */
+  --spacing-12: 3rem;
+  /* 48px */
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Sidebar Tokens */
+  --sidebar-width: 280px;
+  --sidebar-width-collapsed: 80px;
+
+  /* ──────────────────────────────────────────────────────────────────────────
+     SEMANTIC TOKENS (Light Mode)
+     ────────────────────────────────────────────────────────────────────────── */
+
+  /* Core Surfaces - Light Mode (Gelo / Alto Contraste) */
+  --app-bg: #e6ebf1;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f1f5f9;
+  --surface-tertiary: #e2e8f0;
+  --surface-tint: #f1f7ff;
+
+  /* Content */
+  --text-strong: var(--slate-900);
+  --text-main: var(--slate-800);
+  --text-muted: var(--slate-600);
+  --text-subtle: var(--slate-500);
+  --text-inverse: #ffffff;
+
+  /* Accents & Brand */
+  --brand-primary: var(--indigo-600);
+  --brand-secondary: var(--amber-500);
+  --brand-soft: var(--indigo-50);
+
+  /* Feedback */
+  --status-success: var(--green-500);
+  --status-warning: var(--orange-500);
+  --status-error: var(--red-500);
+  --status-info: var(--blue-500);
+
+  /* Interactive */
+  --border-subtle: var(--slate-200);
+  --border-main: var(--slate-300);
+  --border-strong: var(--slate-400);
+
+  --input-bg: #ffffff;
+  --input-border: var(--slate-300);
+  --focus-ring: rgba(79, 70, 229, 0.4);
+
+  /* Components Specific */
+  --card-bg: var(--surface-primary);
+  --card-border: var(--border-subtle);
+  --card-shadow: var(--shadow-md);
+
+  /* Neumorphic Tokens (Light Mode) */
+  --nm-bg: #e6ebf1;
+  --nm-shadow-light: #ffffff;
+  --nm-shadow-dark: #c5cbd5;
+  --nm-inset-light: #ffffff;
+  --nm-inset-dark: #c5cbd5;
+
+  /* Typography */
+  --ui-font-size: 15px;
+  --ui-line-height: 1.5;
+  --ui-letter-spacing: 0.01em;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   SEMANTIC TOKENS (Dark Mode)
+   ────────────────────────────────────────────────────────────────────────── */
+[data-theme='dark'],
+.dark {
+  --app-bg: #050a1b;
+  --surface-primary: #111a2e;
+  --surface-secondary: #1f2937;
+  --surface-tertiary: #374151;
+  --surface-tint: #1e1b4b;
+
+  --text-strong: #f8fafc;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  --text-inverse: #0f172a;
+
+  --brand-primary: #818cf8;
+  --brand-soft: #1e1b4b;
+
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-main: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
+
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.2);
+  --focus-ring: rgba(129, 140, 248, 0.5);
+
+  --card-bg: var(--surface-primary);
+  --card-border: var(--border-subtle);
+  --card-shadow: var(--shadow-xl);
+
+  /* Neumorphic Tokens (Dark Mode) - Refined for depth and contrast */
+  --nm-bg: #0f172a;
+  --nm-shadow-light: rgba(255, 255, 255, 0.015);
+  --nm-shadow-dark: rgba(0, 0, 0, 0.85);
+  --nm-inset-light: rgba(255, 255, 255, 0.01);
+  --nm-inset-dark: rgba(0, 0, 0, 0.7);
+}
+
+/* ─────────────────────────────────────── */
+/* Base Body                               */
+/* ─────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  font-size: var(--ui-font-size);
+  line-height: var(--ui-line-height);
+  letter-spacing: var(--ui-letter-spacing);
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Removed starry background as per rebranding */
+
+:root {
+  --star-color: rgba(99, 102, 241, 0.5);
+}
+
+.dark,
+[data-theme='dark'] {
+  --star-color: rgba(255, 255, 255, 0.9);
+}
+
+button,
+[role="button"],
+select,
+label,
+a,
+input[type="checkbox"],
+input[type="radio"],
+[onclick],
+.cursor-pointer,
+.hover-nm-elevated,
+.hover-nm-inset,
+[tabindex="0"] {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-strong);
+}
+
+p,
+li,
+dd {
+  color: var(--text-main);
+}
+
+/* ─────────────────────────────────────── */
+/* Scrollbars                              */
+/* ─────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 99px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─────────────────────────────────────── */
+/* Neumorphic Utilities                    */
+/* ─────────────────────────────────────── */
+.shadow-nm-flat-sm {
+  box-shadow: 3px 3px 6px var(--nm-shadow-dark), -3px -3px 6px var(--nm-shadow-light);
+}
+
+.shadow-nm-flat {
+  box-shadow: 8px 8px 16px var(--nm-shadow-dark), -8px -8px 16px var(--nm-shadow-light);
+}
+
+.shadow-nm-flat-lg {
+  box-shadow: 14px 14px 28px var(--nm-shadow-dark), -14px -14px 28px var(--nm-shadow-light);
+}
+
+.shadow-nm-inset {
+  box-shadow: inset 4px 4px 8px var(--nm-inset-dark), inset -4px -4px 8px var(--nm-inset-light);
+}
+
+.shadow-nm-inset-lg {
+  box-shadow: inset 8px 8px 16px var(--nm-inset-dark), inset -8px -8px 16px var(--nm-inset-light);
+}
+
+.hover-nm-elevated {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  will-change: transform, box-shadow;
+}
+
+.hover-nm-elevated:hover {
+  transform: translateY(-4px);
+  box-shadow: 12px 12px 24px var(--nm-shadow-dark), -12px -12px 24px var(--nm-shadow-light);
+}
+
+.hover-nm-inset:hover {
+  box-shadow: inset 6px 6px 12px var(--nm-inset-dark), inset -6px -6px 12px var(--nm-inset-light);
+}
+
+.mask-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+}
+
+/* ─────────────────────────────────────── */
+/* Animations                              */
+/* ─────────────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ─────────────────────────────────────── */
+/* Light Mode Refinements                  */
+/* ─────────────────────────────────────── */
+
+/* Melhora contraste do fundo claro */
+:root body {
+  background-color: var(--app-bg);
+}
+
+/* Cards em light mode — sombra e fundo leve */
+:root .card,
+:root [class*="bg-white"]:not([class*="dark:"]):not(.sidebar-excluded) {
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* Inputs em light mode */
+:root input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+:root select,
+:root textarea {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-contrast-high);
+}
+
+:root input::placeholder,
+:root textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* ─────────────────────────────────────── */
+/* Dark Mode Global Fixes                  */
+/* ─────────────────────────────────────── */
+
+/* Fundo geral dark */
+.dark body {
+  background-color: var(--app-bg);
+}
+
+body[data-theme='dark'],
+[data-theme='dark'] body {
+  background-color: var(--app-bg);
+}
+
+/* Modais dark */
+.dark [role="dialog"],
+.dark [data-modal],
+.dark .modal-content {
+  background-color: var(--surface-primary);
+  border-color: var(--border-subtle);
+  color: var(--text-main);
+}
+
+/* Cards dark */
+.dark .card {
+  background-color: var(--surface-primary);
+  border-color: var(--border-subtle);
+}
+
+/* Inputs dark — garante consistência mesmo sem classes dark: */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.dark select,
+.dark textarea {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-contrast-high);
+}
+
+[data-theme='dark'] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+[data-theme='dark'] select,
+[data-theme='dark'] textarea {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-contrast-high);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b;
+}
+
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: #64748b;
+}
+
+/* Native select lists in dark mode */
+.dark select,
+[data-theme='dark'] select {
+  color-scheme: dark;
+}
+
+.dark select option,
+.dark select optgroup {
+  background-color: var(--slate-900);
+  color: var(--text-main);
+}
+
+/* Texto padrão dark */
+.dark p,
+.dark span:not([class*="text-"]),
+.dark li {
+  color: inherit;
+}
+
+[data-theme='dark'] p,
+[data-theme='dark'] span:not([class*="text-"]),
+[data-theme='dark'] li {
+  color: inherit;
+}
+
+/* Tabelas dark */
+.dark table {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark th {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+}
+
+.dark tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.dark td {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] table {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='dark'] th {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+}
+
+[data-theme='dark'] tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='dark'] td {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Focus visibility across the system */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Better readability for commonly used slate utility shades */
+:root [class~="text-slate-400"] {
+  color: #475569;
+}
+
+:root [class~="text-slate-500"] {
+  color: #334155;
+}
+
+:root [class~="text-slate-600"] {
+  color: #1e293b;
+}
+
+.dark [class~="text-slate-400"] {
+  color: #cbd5e1;
+}
+
+.dark [class~="text-slate-500"] {
+  color: #e2e8f0;
+}
+
+.dark [class~="text-slate-600"] {
+  color: #f1f5f9;
+}
+
+.dark [class~="text-slate-700"] {
+  color: #e2e8f0;
+}
+
+.dark [class~="text-slate-800"] {
+  color: #f1f5f9;
+}
+
+.dark [class~="text-slate-900"] {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] [class~="text-slate-400"] {
+  color: #cbd5e1;
+}
+
+[data-theme='dark'] [class~="text-slate-500"] {
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] [class~="text-slate-600"] {
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] [class~="text-slate-700"] {
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] [class~="text-slate-800"] {
+  color: #f1f5f9;
+}
+
+[data-theme='dark'] [class~="text-slate-900"] {
+  color: #f8fafc;
+}
+
+/* Sidebar is always a dark surface, independent of selected theme */
+.sidebar-shell [class~="text-slate-400"] {
+  color: #cbd5e1;
+}
+
+.sidebar-shell [class~="text-slate-500"] {
+  color: #94a3b8;
+}
+
+.sidebar-shell [class~="text-slate-600"] {
+  color: #94a3b8;
+}
+
+.sidebar-gradient {
+  background-image: linear-gradient(180deg, #0d1526 0%, #090d1a 100%);
+}
+
+.sidebar-mobile-drawer {
+  background: linear-gradient(180deg, #0d1526 0%, #090d1a 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-mobile-bar {
+  background: #090d1a;
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Equipamento sidebar: keep dark style only in dark mode */
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface {
+  color: #1e293b;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="text-slate-200"] {
+  color: #1e293b;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="text-slate-300"] {
+  color: #334155;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="text-slate-400"] {
+  color: #475569;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="text-slate-500"] {
+  color: #64748b;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="text-slate-600"] {
+  color: #64748b;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="bg-white/5"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="bg-white/[0.03]"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="bg-white/[0.04]"] {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="bg-white/10"] {
+  background-color: rgba(241, 245, 249, 1);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="border-white/10"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="border-white/[0.06]"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="border-white/[0.07]"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="border-white/[0.08]"] {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .equip-sidebar-surface [class~="before:bg-white/10"]::before {
+  background-color: rgba(148, 163, 184, 0.35);
+}
+
+/* Network module: enforce clear surfaces in light mode */
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class*="bg-slate-900"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class*="bg-slate-950"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class*="bg-black"] {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class*="border-white/"] {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class~="text-white"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class~="text-slate-300"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-topology-surface [class~="text-slate-200"] {
+  color: #1e293b;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  color: #0f172a;
+  border-left-color: rgba(148, 163, 184, 0.35);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class*="bg-black"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class*="bg-slate-900"] {
+  background-color: #ffffff;
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class*="bg-white/5"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class*="bg-white/10"] {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class*="border-white/"] {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class~="text-white"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class~="text-slate-300"],
+html:not(.dark):not([data-theme='dark']) body:not(.dark):not([data-theme='dark']) .network-node-surface [class~="text-slate-200"] {
+  color: #1e293b;
+}
+
+/* Keep typography readable in tiny uppercase labels */
+[class*="tracking-widest"],
+[class*="tracking-[0.3em]"],
+[class*="tracking-[0.4em]"] {
+  letter-spacing: max(0.08em, 0.08rem);
+}
+
+/* ─────────────────────────────────────── */
+/* Scrollbars                              */
+/* ─────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 99px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+
+/* ─────────────────────────────────────── */
+/* SVG Hamburger Animation (Framer Motion) */
+/* ─────────────────────────────────────── */
+/* Estilos básicos de animação são agora gerenciados via framer-motion no componente. */
