@@ -34,4 +34,4 @@ jobs:
         run: docker compose -f docker-compose.vps.yml build --no-cache --progress=plain --quiet
 
       - name: Teste de inicialização (dry-run)
-        run: docker compose -f docker-compose.vps.yml up --no-start --quiet
+        run: docker compose -f docker-compose.vps.yml up --no-start 
